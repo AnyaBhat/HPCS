@@ -80,3 +80,12 @@ int main(int argc, char *argv[]) {
     MPI_Finalize();
     return 0;
 }
+
+
+/* mpirun -np 2 ./prg2
+Enter the number of elements (m) : 5
+Total number of elements: 10
+Enter the elements:
+1 2 3 4 5 6 7 8 9 10
+Total of the averages sent to rank 0 : 3 */
+
