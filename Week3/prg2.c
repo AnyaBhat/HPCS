@@ -22,6 +22,7 @@ int main(int argc, char *argv[]) {
             perror("Unable to allocate memory");
             MPI_Abort(MPI_COMM_WORLD, 1);
         }
+        printf("Enter the elements of the array:");
         for (int i = 0; i < M; i++) {
             scanf("%d", &array[i]);
         }
