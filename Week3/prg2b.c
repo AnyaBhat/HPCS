@@ -1,77 +1,59 @@
-//Might be wrong
-#include <stdio.h>
-#include <stdlib.h>
+//Stackoverflowinclude <stdio.h>
 #include <mpi.h>
 
-float calculate_average(float *data, int count) {
-    float sum = 0.0;
-    for (int i = 0; i < count; i++) {
-        sum += data[i];
-    }
-    return sum / count;
-}
-
 int main(int argc, char *argv[]) {
-    int rank, size;
-    int M, N;
-    float *data = NULL;
-    float *sub_data = NULL;
-    float local_avg, global_avg;
+    int rank, size, arr[10], recv[20],n;
+    float avg = 0, sum = 0, tot_sum = 0, tot_avg = 0, ans[20];
 
     MPI_Init(&argc, &argv);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     MPI_Comm_size(MPI_COMM_WORLD, &size);
 
     if (rank == 0) {
-        // Root process
-        N= size;
-        printf("Enter the value for M: ");
-        scanf("%d", &M);
-
-        // Allocate memory for the data
-        data = (float *)malloc(N * M * sizeof(float));
-        
-        // Read data
-        printf("Enter %d x %d elements:\n", N, M);
-        for (int i = 0; i < N * M; i++) {
-            scanf("%f", &data[i]);
+        fprintf(stdout, "Enter n:\n");
+        fflush(stdout);
+        scanf("%d", &n);
+        fprintf(stdout, "Enter %d array elements:\n", n * size);
+        fflush(stdout);
+        for (int i = 0; i < n * size; i++) {
+            scanf("%d", &arr[i]);
         }
     }
 
-    // Allocate memory for the sub_data (chunk of data each process will receive)
-    sub_data = (float *)malloc(M * sizeof(float));
+    MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
+    MPI_Scatter(arr, n, MPI_INT, recv, n, MPI_INT, 0, MPI_COMM_WORLD);
 
-    // Scatter the data to all processes
-    MPI_Scatter(data, M, MPI_FLOAT, sub_data, M, MPI_FLOAT, 0, MPI_COMM_WORLD);
-
-    // Compute the average of the received chunk
-    local_avg=calculate_average(sub_data, M);
-
-    // Gather all the local averages at the root process
-    float *all_avgs = NULL;
-    if (rank == 0) {
-        all_avgs = (float *)malloc(size * sizeof(float));
+    for (int i = 0; i < n; i++) {
+        sum += recv[i];  
     }
-
-    MPI_Gather(&local_avg, 1, MPI_FLOAT, all_avgs, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
+    avg = sum / n;
+    
+    fprintf(stdout, "Process (rank %d) has average %f\n", rank, avg);
+    fflush(stdout);
+    
+    MPI_Gather(&avg, 1, MPI_FLOAT, ans, 1, MPI_FLOAT, 0, MPI_COMM_WORLD);
 
     if (rank == 0) {
-        // Calculate the final average of all gathered averages
-        float sum_of_avgs = 0.0;
-        for (int i = 0; i < size; i++) {
-            sum_of_avgs += all_avgs[i];
+        for (int i = 0; i < size; i++) {  
+            tot_sum += ans[i];
         }
-        //global_avg = sum_of_avgs / size;
-        printf("The final average of averages is: %f\n", sum_of_avgs);
-
-        // Free allocated memory
-        free(data);
-        free(all_avgs);
+        tot_avg = tot_sum / size;  
+        fprintf(stdout, "Total average: %f\n", tot_avg);
+        fflush(stdout);
     }
-
-    // Free memory allocated for each process
-    free(sub_data);
 
     MPI_Finalize();
     return 0;
 }
+/*
+Generated output
+Enter n:
+1
+Enter 4 array elements:
+1 2 3 4
+Process (rank 0) has average 1.000000
+Process (rank 2) has average 3.000000
+Process (rank 1) has average 2.000000
+Process (rank 3) has average 4.000000
+Total average: 2.500000
+*/
