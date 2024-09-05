@@ -61,3 +61,17 @@ int main(int argc, char **argv) {
     MPI_Finalize();
     return 0;
 }
+
+/*
+mpirun -np 4 ./prg3.out
+Enter 16 numbers (4x4 matrix):
+1 2 3 4
+1 2 3 1
+1 1 1 1
+2 1 2 1
+Resulting Matrix:
+1 2 3 4 
+2 4 6 5 
+3 5 7 6 
+5 6 9 7 
+*/
