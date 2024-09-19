@@ -90,3 +90,19 @@ int main() {
     return 0;
 }
 
+/*
+nter the size of the matrix N: 5
+Matrix A:
+1 2 3 4 5 
+6 7 8 9 10 
+11 12 13 14 15 
+16 17 18 19 20 
+21 22 23 24 25 
+
+Modified Matrix:
+0 1 1 1 1 
+6 0 2 2 2 
+2 3 0 6 6 
+7 8 9 0 24 
+3 4 5 6 0 
+*/
