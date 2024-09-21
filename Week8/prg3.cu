@@ -98,13 +98,13 @@ Enter the size of the matrix (N): 4
 Enter the elements of the matrix:
 1 2 3 4
 5 6 7 8
-9 10 11 12
+9 10 11 6
 13 14 15 16
 
 Processed matrix:
 0   2   6    24
 5   0   5040 40320
-9   1   0    <factorial overflow>
+9   1   0    720
 4   5   6    0
 
 */
