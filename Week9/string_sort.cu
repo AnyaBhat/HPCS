@@ -1,4 +1,4 @@
-#Using Single Block and Single Thread 
+//Using Single Block and Single Thread 
 
 #include <stdio.h>
 #include <stdlib.h>
