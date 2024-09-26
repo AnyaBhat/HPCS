@@ -65,3 +65,13 @@ int main() {
     
     return 0;
 }
+
+
+/*
+$  nvcc -o prg1.out string_sort.cu 
+$ ./prg1.out
+Enter a string to sort: cudaprogram
+Original string: cudaprogram
+Sorted string: aacdgmoprru
+
+*/
