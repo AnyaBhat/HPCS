@@ -66,3 +66,12 @@ int main() {
 
     return 0;
 }
+/*
+
+./prg1.out 
+Enter a string (up to 99 characters): cudaprogram
+Length = 11
+Original string: cudaprogram
+Sorted string: aacdgmoprru
+
+*/
