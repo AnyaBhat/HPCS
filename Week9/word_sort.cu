@@ -102,3 +102,17 @@ int main() {
     return 0;
 }
 
+/*
+
+./prg2.out 
+Enter a string: Hello World this is a Cuda program 
+Sorted Words:
+eHllo
+dlorW
+hist
+is
+a
+aCdu
+agmoprr
+
+*/
