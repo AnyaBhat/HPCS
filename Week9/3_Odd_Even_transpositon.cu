@@ -87,3 +87,15 @@ int main() {
     return 0;
 }
 
+/*
+
+./prg3.out
+Enter the number of elements: 10
+Enter 10 integers:
+1 52 9 17 26 34 53 81 25 38 
+Original array:
+1 52 9 17 26 34 53 81 25 38 
+Sorted array:
+1 9 17 25 26 34 38 52 53 81 
+
+*/
